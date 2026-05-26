@@ -1,0 +1,45 @@
+# --- Target / flash / PSRAM (ESP32-S3-PICO-1-N8R8: 8MB flash, 8MB octal PSRAM) ---
+CONFIG_IDF_TARGET="esp32s3"
+CONFIG_ESPTOOLPY_FLASHMODE_QIO=y
+CONFIG_ESPTOOLPY_FLASHSIZE_8MB=y
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
+CONFIG_COMPILER_OPTIMIZATION_PERF=y
+
+CONFIG_SPIRAM=y
+CONFIG_SPIRAM_MODE_OCT=y
+CONFIG_SPIRAM_SPEED_80M=y
+CONFIG_SPIRAM_FETCH_INSTRUCTIONS=y
+CONFIG_SPIRAM_RODATA=y
+
+CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_240=y
+CONFIG_ESP32S3_DATA_CACHE_LINE_64B=y
+CONFIG_FREERTOS_HZ=1000
+# Boot-time image decoding runs in the main task - give it room.
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=8192
+
+# --- LVGL (v8) ---
+# QSPI AMOLED expects byte-swapped RGB565
+CONFIG_LV_COLOR_16_SWAP=y
+# Use the system allocator so large image buffers can land in PSRAM
+CONFIG_LV_MEM_CUSTOM=y
+CONFIG_LV_MEMCPY_MEMSET_STD=y
+CONFIG_LV_ATTRIBUTE_FAST_MEM_USE_IRAM=y
+CONFIG_LV_FONT_MONTSERRAT_16=y
+CONFIG_LV_FONT_MONTSERRAT_28=y
+# Animated loading spinner
+CONFIG_LV_USE_SPINNER=y
+
+# --- FATFS ---
+# Long filenames so names like "hinge-step1.png" survive (8.3 is the default)
+CONFIG_FATFS_LFN_HEAP=y
+
+# Keep every decoded image resident so swipes don't re-decode (set precisely at
+# runtime via lv_img_cache_set_size; this is just a sane default).
+CONFIG_LV_IMG_CACHE_DEF_SIZE=16
+
+# PNG decoding (lodepng) for the gallery images
+CONFIG_LV_USE_PNG=y
+# Let LVGL read files through the C stdio VFS, exposed as drive letter 'S' (ASCII 83)
+CONFIG_LV_USE_FS_STDIO=y
+CONFIG_LV_FS_STDIO_LETTER=83

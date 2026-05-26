@@ -1,0 +1,12 @@
+## Managed dependencies pulled from the ESP Component Registry on first build.
+version: "1.0.0"
+dependencies:
+  idf: ">=5.5"
+  # AMOLED panel driver used by this board (SH8601 / CO5300 compatible)
+  esp_lcd_sh8601:
+    version: "^2.0.0"
+    public: true
+  # LVGL v8 - matches Waveshare's tested driver for this panel
+  lvgl/lvgl:
+    version: "^8.4.0"
+    public: true

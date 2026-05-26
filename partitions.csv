@@ -1,0 +1,7 @@
+# Name,   Type, SubType, Offset,  Size, Flags
+# Images are bundled into the read-only "storage" FAT partition (built from
+# ./flash_data by CMakeLists.txt) - no SD card required.
+nvs,      data, nvs,     ,        0x6000,
+phy_init, data, phy,     ,        0x1000,
+factory,  app,  factory, ,        2M,
+storage,  data, fat,     ,        3M,
