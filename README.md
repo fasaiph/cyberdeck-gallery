@@ -113,6 +113,9 @@ cp build/merged-binary.bin prebuilt/cyberdeck-gallery-esp32s3.bin
   of it, so the home screen shows through as the photo shrinks away on close.
 - **Tuning:** loader look → `build_loader()`; slide speed → `SLIDE_MS`; open/close feel →
   `MINI_ZOOM` / `APP_ANIM_MS` (all in `main/main.c`).
+- **Orientation:** the UI is rotated 90° so the USB-C port faces you (bottom), set by
+  `disp_drv.rotated = LV_DISP_ROT_270` in `main/display_bsp.c`. Use `LV_DISP_ROT_90` for the
+  opposite, or `LV_DISP_ROT_NONE` for USB on the left. LVGL rotates touch to match.
 - **microSD:** this board has an SD slot (SPI pins above) but the demo doesn't use it.
   Note: very old / non-spec-compliant cards can fail SD init — use a standard modern card.
 

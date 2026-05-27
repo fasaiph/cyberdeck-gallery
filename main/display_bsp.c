@@ -217,9 +217,12 @@ void waveshare_lcd_init(void)
     disp_drv.rounder_cb = lvgl_rounder_cb;
     disp_drv.draw_buf = &disp_buf;
     disp_drv.user_data = panel_handle;
-    /* No rotation: a physical horizontal swipe maps directly to LV_DIR_LEFT /
-     * LV_DIR_RIGHT. Change this (and re-test touch mapping) if you need a
-     * different "up". */
+    /* Rotate the whole UI 90 degrees so the USB-C port faces the user (bottom
+     * edge) instead of the left. LVGL rotates both the rendered image and the
+     * touch coordinates, so taps and gestures stay consistent automatically.
+     * If the image comes up upside-down (USB at top), use LV_DISP_ROT_90. */
+    disp_drv.sw_rotate = 1;
+    disp_drv.rotated = LV_DISP_ROT_270;
     lv_disp_t *disp = lv_disp_drv_register(&disp_drv);
 
     ESP_LOGI(TAG, "Install LVGL tick timer");
